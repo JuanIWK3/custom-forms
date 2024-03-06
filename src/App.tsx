@@ -10,7 +10,6 @@ function App() {
           label: 'Username',
           type: 'text',
           name: 'username',
-          value: '',
           schema: z.string().min(3),
           placeholder: 'Enter your username',
         },
@@ -18,7 +17,6 @@ function App() {
           label: 'Password',
           type: 'password',
           name: 'password',
-          value: '',
           schema: z.string().min(8),
           placeholder: 'Enter your password',
         },
@@ -30,9 +28,9 @@ function App() {
   ]
 
   return (
-    <div>
+    <div className='flex flex-col items-center justify-center min-h-screen bg-slate-50'>
       {
-        fields.map((form, i) => (
+        fields.map((form) => (
           <CustomForm props={form} key={form.title} />
         ))
       }

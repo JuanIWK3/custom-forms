@@ -1,8 +1,8 @@
-import { Input } from "./ui/input"
-import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useEffect } from "react"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
 
 function createSchema(fields: Field[]) {
   const schema: any = {}
@@ -22,25 +22,22 @@ export function CustomForm({ props }: { props: FormProps }) {
     shouldFocusError: false,
   })
 
-  useEffect(() => {
-    console.log(form.formState.errors)
-  }, [form.formState.errors])
-
-
   return (
-    <div className="flex items-center p-4 flex-col">
-      <h1 className="font-bold text-xl">{props.title}</h1>
-      <form className="flex flex-col w-1/2" onSubmit={form.handleSubmit(props.onSubmit)}>
+    <div className="flex items-center p-8 flex-col shadow-xl rounded-lg bg-white">
+      <h1 className="font-bold text-xl mb-4">{props.title}</h1>
+      <form className="flex flex-col" onSubmit={form.handleSubmit(props.onSubmit)}>
         {props.fields.map((field) => (
           <div key={field.name}>
+            <label className="font-bold mb-4">{field.label}</label>
             <Input
+              className=""
               placeholder={field.placeholder}
               {...form.register(field.name)}
             />
-            <p className="text-red-500">{form.formState.errors[field.name]?.message?.toString()}</p>
+            <p className="text-red-500 mb-4">{form.formState.errors[field.name]?.message?.toString()}</p>
           </div>
         ))}
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded mt-4">Submit</button>
+        <Button variant={"default"} type="submit">Submit</Button>
       </form>
     </div>
   )
@@ -56,8 +53,6 @@ export type Field = {
   label: string
   type: string
   name: string
-  value: string
   schema: any
-  options?: string[]
   placeholder?: string
 }
